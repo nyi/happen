@@ -67,6 +67,7 @@
                         <p>go to <a>Farmers Market</a> today</p>
                     </div>
                 </div>
+                <div id="wrapper2" class="news-item"></div>
                 <div class="news-item">
                     <a class="news-photo"></a>
                     <div class="news-text">
@@ -199,20 +200,80 @@
                     </td></tr></table>
                 </div>
             </div>
+             <script type="text/javascript">
+var carousel,
+    el,
+    i,
+    page,
+    slides = ['<a class="news-photo"></a><div class="news-text"><h2>Sam Couch</h2><span class="handle">@sccouch</span><p>go to <a>Farmers Market</a> today</p></div>', 
+            '<div class="news-delete"><table height="78px" width="100%" style="background-color: #e86060;"><tr valign="middle"><td width="15px"></td><td align="left">-</td></tr></table></div>',
+            '<div class="news-metoo"><table height="78px" width="100%" style="background-color: #68d2a4;"><tr valign="middle"><td align="right">me too</td><td width="15px"></td></tr></table></div>',
+            ];
+    /*slides = [
+        '<div class="news-metoo">
+                <table height="78px" align="right" style="margin-right:15px"><tr valign="middle"><td>
+                me too
+                </td></tr></table>
+                </div>',
+        '
+                    <a class="news-photo"></a>
+                    <div class="news-text">
+                        <h2>Sam Couch</h2>
+                        <span class="handle">@sccouch</span>
+                        <p>go to <a>Farmers Market</a> today</p>
+                    </div>',
+        '<div class="news-delete">
+                <table height="78px" align="left" style="margin-left:15px"><tr valign="middle"><td>
+                -
+                </td></tr></table>
+                </div>'
+    ];*/
+
+carousel = new SwipeView('#wrapper2', {
+    numberOfPages: slides.length,
+    hastyPageFlip: true
+});
+
+// Load initial data
+for (i=0; i<3; i++) {
+    page = i==0 ? slides.length-1 : i-1;
+
+    el = document.createElement('span');
+    el.innerHTML = slides[page];
+    carousel.masterPages[i].appendChild(el)
+}
+
+carousel.onFlip(function () {
+    var el,
+        upcoming,
+        i;
+
+    for (i=0; i<3; i++) {
+        upcoming = carousel.masterPages[i].dataset.upcomingPageIndex;
+
+        if (upcoming != carousel.masterPages[i].dataset.pageIndex) {
+            el = carousel.masterPages[i].querySelector('span');
+            el.innerHTML = slides[upcoming];
+        }
+    }
+});
+
+</script>
+                    <script type="text/javascript">
+                var myScroll;
+
+                function loaded () {
+                    myScroll = new IScroll('#wrapper', { scrollX: true, freeScroll: true });
+                    }
+
+                    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        </script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/iscroll-lite.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
-        <script type="text/javascript">
-				var myScroll;
 
-				function loaded () {
-					myScroll = new IScroll('#wrapper', { scrollX: true, freeScroll: true });
-					}
-
-					document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-        </script>
     </body>
 </html>
